@@ -1,3 +1,5 @@
+Font "sans" 12
+
 Style Normal
 BorderWidth 19 3 3 3
 TitleBar 1 20 3 -37 19
