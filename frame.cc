@@ -547,13 +547,13 @@ void frame_window::unmap()
 
 void frame_window::show()
 {
+	raise();
+	deiconify();
+
 	if (w_workspace && w_workspace != screen->workspace())
 	{
 		screen->set_workspace(w_workspace);
 	}
-
-	raise();
-	deiconify();
 }
 
 void frame_window::set_workspace(uint ws)
