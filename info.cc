@@ -48,7 +48,7 @@ void info_window::init()
 		CWBackPixel | CWEventMask | CWCursor;
 	swa.background_pixmap = cfg->util.pixmap[0];
 	swa.background_pixel = cfg->util.bg_color[0];
-	swa.event_mask = EnterWindowMask | LeaveWindowMask;
+	swa.event_mask = EnterWindowMask | LeaveWindowMask | ExposureMask;
 	swa.cursor = config::cursor;
 
 	Window win = XCreateWindow(dpy, screen->id(), x, y, w, h, 0,
