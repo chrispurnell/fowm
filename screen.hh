@@ -20,8 +20,9 @@ public:
 	~window_list() {}
 
 	frame_window * first() { return l_first; }
-	void add(frame_window *);
-	void remove(frame_window *);
+	inline void add(frame_window *);
+	inline void remove(frame_window *);
+	inline uint length();
 };
 
 class root_window final : public window

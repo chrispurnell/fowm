@@ -3,8 +3,7 @@
 
 #include <X11/Xatom.h>
 
-#include "frame.hh"
-#include "screen.hh"
+#include "winlist.hh"
 #include "info.hh"
 #include "winmenu.hh"
 #include "atoms.hh"

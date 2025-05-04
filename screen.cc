@@ -226,37 +226,3 @@ void root_window::configure_request(XConfigureRequestEvent * ev)
 	xwc.stack_mode = ev->detail;
 	XConfigureWindow(dpy, ev->window, ev->value_mask, &xwc);
 }
-
-void window_list::add(frame_window * w)
-{
-	if (l_last)
-	{
-		l_last->node.n_next = w;
-	}
-	else
-	{
-		l_first = w;
-	}
-
-	l_last = w;
-	w->node.n_next = nullptr;
-}
-
-void window_list::remove(frame_window * w)
-{
-	frame_window * p = nullptr;
-	frame_window ** ptr = &l_first;
-
-	while (*ptr)
-	{
-		if (*ptr == w)
-		{
-			*ptr = w->node.n_next;
-			if (l_last == w) l_last = p;
-			return;
-		}
-
-		p = *ptr;
-		ptr = &p->node.n_next;
-	}
-}

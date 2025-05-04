@@ -1,8 +1,7 @@
 #include <stdalign.h>
 #include <string.h>
 
-#include "frame.hh"
-#include "screen.hh"
+#include "winlist.hh"
 #include "menu.hh"
 #include "winmenu.hh"
 #include "config.hh"
@@ -72,14 +71,7 @@ void menu_window::toggle_wm(int x , int y)
 			cfg->nitems = 0;
 		}
 
-		uint n = 0;
-		frame_window * fwin = screen->frame_list.first();
-		while (fwin)
-		{
-			n++;
-			fwin = fwin->next();
-		}
-
+		uint n = screen->frame_list.length();
 		if (!n) return;
 
 		items = malloc<cfg_menu_item>(n);
@@ -88,7 +80,7 @@ void menu_window::toggle_wm(int x , int y)
 
 		uint tw = 1;
 
-		fwin = screen->frame_list.first();
+		frame_window * fwin = screen->frame_list.first();
 		for (uint i = 0; i < n; i++)
 		{
 			size_t len = fwin->name_len();
