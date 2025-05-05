@@ -3,7 +3,7 @@ Font "sans" 12
 Style Normal
 BorderWidth 19 3 3 3
 TitleBar 1 20 3 -37 19
-TitleText 0 1 -3 -1
+TitleText 1 1 -2 -2
 TitleFGColor "rgb:8/8/8" "rgb:c/c/c" "rgb:f/f/f" "rgb:f/f/f"
 TitlePixmap "og/title-un.xpm" "og/title-fo.xpm" "og/title-fo.xpm" "og/title-pr.xpm"
 NumBorder 13
@@ -37,7 +37,7 @@ BorderPixmap 12 "og/btm-ri-un.xpm" "og/btm-ri-fo.xpm"
 Style NoBorder
 BorderWidth 16 0 0 0
 TitleBar 1 17 0 -34 16
-TitleText 2 1 -3 -2
+TitleText 1 1 -2 -2
 TitleFGColor "rgb:8/8/8" "rgb:c/c/c" "rgb:f/f/f" "rgb:f/f/f"
 TitlePixmap "og/title-un.xpm" "og/title-fo.xpm" "og/title-fo.xpm" "og/title-pr.xpm"
 NumBorder 5
