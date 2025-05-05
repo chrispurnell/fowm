@@ -12,7 +12,8 @@ void menu_window::init()
 	for (menu_action * act = menu_action::first; act; act = act->next)
 	{
 		cfg_menu * cfg = &act->menu;
-		
+		cfg_style * csp = config::style + STYLE_MENU;
+
 		uint tw = 1;
 		uint aw = 0;
 
@@ -20,10 +21,10 @@ void menu_window::init()
 		for (uint i = 0; i < n; i++)
 		{
 			const char *s = cfg->items[i].name;
-			if (!s) 
+			if (!s)
 			{
 				s = cfg->items[i].menu->name;
-				aw = config::menu_arrow_width;
+				aw = csp->util.arrow_width;
 			}
 #if USE_XFT
 			XGlyphInfo info;
@@ -34,8 +35,6 @@ void menu_window::init()
 #endif
 			if (t > tw) tw = t;
 		}
-
-		cfg_style * csp = config::style + STYLE_MENU;
 
 		tw += aw + csp->util.left + csp->util.right;
 
@@ -79,8 +78,8 @@ int menuitem_window::a_y = 0;
 
 void menuitem_window::init()
 {
-	cfg_style * csp = config::style + STYLE_MENU;
-	a_y = (csp->util.height - config::menu_arrow_height) / 2;
+	cfg_util * cfg = &config::style[STYLE_MENU].util;
+	a_y = (cfg->height - cfg->arrow_height) / 2;
 }
 
 void menu_window::toggle(cfg_menu * cfg, frame_window * frame, int x, int y)
@@ -112,7 +111,7 @@ void menu_window::open(int x, int y)
 {
 	int mx = screen->width() - w_width;
 	int my = screen->height() - w_height;
-	
+
 	if (mx < 0)
 	{
 		if (x > 0) x = 0;
@@ -197,7 +196,7 @@ void menu_window::motion_notify(XMotionEvent * ev)
 
 	int mx = screen->width() - w_width;
 	int my = screen->height() - w_height;
-	
+
 	if (mx < 0)
 	{
 		if (nx > 0) nx = 0;
@@ -234,7 +233,7 @@ menuitem_window * menuitem_window::create(uint len, menu_window * menu, cfg_menu
 	menuitem_window * ptr = malloc<menuitem_window>(len);
 	cfg_style * csp = config::style + STYLE_MENU;
 	uint h = csp->util.height;
-	int a_x = w - config::menu_arrow_width;
+	int a_x = w - csp->util.arrow_width;
 
 	for (uint i = 0; i < len; i++)
 	{
@@ -254,7 +253,7 @@ menuitem_window * menuitem_window::create(uint len, menu_window * menu, cfg_menu
 		iwin->w_over = false;
 
 		const char * s = cfg[i].name;
-		iwin->w_arrow = !s && config::menu_arrow_width;
+		iwin->w_arrow = !s && csp->util.arrow_width;
 		if (!s) s = cfg[i].menu->name;
 
 		iwin->w_text = s;
@@ -270,7 +269,7 @@ menuitem_window * menuitem_window::create(uint len, menu_window * menu, cfg_menu
 #endif
 
 		XMapWindow(dpy, win);
-		
+
 		y += h;
 	}
 
@@ -353,6 +352,8 @@ void menuitem_window::leave_notify(XCrossingEvent *)
 #ifdef USE_XFT
 void menuitem_window::expose(XExposeEvent * ev)
 {
+	cfg_util * cfg = &config::style[STYLE_MENU].util;
+
 	if (w_text_len)
 	{
 		if (ev)
@@ -369,16 +370,16 @@ void menuitem_window::expose(XExposeEvent * ev)
 			XftDrawSetClip(w_draw, nullptr);
 		}
 
-		cfg_util * cfg = &config::style[STYLE_MENU].util;
 		uint ci = decor_window::color_index(cfg->num_col, w_over);
 		XftDrawStringUtf8(w_draw, cfg->fg_color + ci, config::font, cfg->left, cfg->baseline, str_cast(w_text), w_text_len);
 	}
+
 	if (w_arrow)
 	{
 		int x = a_x;
 		int y = a_y;
-		int w = config::menu_arrow_width;
-		int h = config::menu_arrow_height;
+		int w = cfg->arrow_width;
+		int h = cfg->arrow_height;
 		if (ev)
 		{
 			if (ev->x > x) { w -= ev->x - x; x = ev->x; }
@@ -390,7 +391,7 @@ void menuitem_window::expose(XExposeEvent * ev)
 		}
 		if (w > 0 && h > 0)
 		{
-			XCopyArea(dpy, config::menu_arrow[w_over ? 1 : 0], id(), screen->gc(), x - a_x, y - a_y, w, h, x, y);
+			XCopyArea(dpy, cfg->arrow[w_over ? 1 : 0], id(), screen->gc(), x - a_x, y - a_y, w, h, x, y);
 		}
 	}
 }
@@ -399,16 +400,17 @@ void menuitem_window::expose(XExposeEvent * ev)
 {
 	if (ev && ev->count) return;
 
+	cfg_util * cfg = &config::style[STYLE_MENU].util;
+
 	if (w_text_len)
 	{
-		cfg_util * cfg = &config::style[STYLE_MENU].util;
 		XDrawString(dpy, id(), w_gc, cfg->left, cfg->baseline, w_text, w_text_len);
 	}
 
 	if (w_arrow)
 	{
-		XCopyArea(dpy, config::menu_arrow[w_over ? 1 : 0], id(), w_gc, 0, 0,
-			config::menu_arrow_width, config::menu_arrow_height, a_x, a_y);
+		XCopyArea(dpy, cfg->arrow[w_over ? 1 : 0], id(), w_gc, 0, 0,
+			cfg->arrow_width, cfg->arrow_height, a_x, a_y);
 	}
 }
 #endif

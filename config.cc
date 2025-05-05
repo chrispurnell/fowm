@@ -23,16 +23,13 @@ XFontStruct * config::font = nullptr;
 #endif
 Cursor config::cursor = None;
 cfg_style config::style[NUM_STYLES] = {};
-Pixmap config::menu_arrow[2] = {};
-uint config::menu_arrow_width = 0;
-uint config::menu_arrow_height = 0;
-uint config::max_menu_width = 0;
 cfg_actions config::button_press[NUM_BTN_ACT] = {};
 cfg_actions config::button_release[NUM_BTN_ACT] = {};
 cfg_key * config::keys = nullptr;
 uint config::num_keys = 0;
 uint config::modifier = 0;
 uint config::mod_act = 0;
+uint config::max_menu_width = 0;
 uint config::snap_dist[4] = {};
 uint config::workspaces = 1;
 
@@ -411,6 +408,47 @@ bool cmd_title_text(uint argc, char ** argv)
 	return true;
 }
 
+bool cmd_title_left(uint argc, char ** argv)
+{
+	if (argc < 3 || argc > 6) return false;
+
+	if (!(c_style & STYLE_TITLEBAR))
+		return false;
+
+	cfg_style * csp = config::style + c_style;
+	if (!to_int(argv[1], &csp->titlebar.left_width))
+		return false;
+
+	uint n = argc - 2;
+	Pixmap * cfg = csp->titlebar.left;
+	for (uint i = 0; i < n; i++)
+	{
+		if (!pixmap::load(argv[2 + i], cfg + i))
+			return false;
+	}
+
+	return true;
+}
+
+bool cmd_title_right(uint argc, char ** argv)
+{
+	if (argc < 3 || argc > 6) return false;
+
+	cfg_style * csp = config::style + c_style;
+	if (!to_int(argv[1], &csp->titlebar.right_width))
+		return false;
+
+	uint n = argc - 2;
+	Pixmap * cfg = csp->titlebar.right;
+	for (uint i = 0; i < n; i++)
+	{
+		if (!pixmap::load(argv[2 + i], cfg + i))
+			return false;
+	}
+
+	return true;
+}
+
 bool cmd_num_border(uint argc, char ** argv)
 {
 	if (argc != 2) return false;
@@ -610,24 +648,26 @@ bool cmd_menu_arrow(uint argc, char ** argv)
 {
 	if (argc < 2 || argc > 3) return false;
 
-	if (!pixmap::load(argv[1], config::menu_arrow))
+	cfg_util * cfg = &config::style[STYLE_MENU].util;
+
+	if (!pixmap::load(argv[1], cfg->arrow))
 		return false;
 
 	if (argc > 2)
 	{
-		if (!pixmap::load(argv[2], config::menu_arrow + 1))
+		if (!pixmap::load(argv[2], cfg->arrow + 1))
 			return false;
 	}
 	else
 	{
-		config::menu_arrow[1] = config::menu_arrow[0];
+		cfg->arrow[1] = cfg->arrow[0];
 	}
 
 	union { Window w; int i; uint u; } u;
-	if (!XGetGeometry(dpy, config::menu_arrow[0], &u.w, &u.i, &u.i,
-		&config::menu_arrow_width, &config::menu_arrow_height,
+	if (!XGetGeometry(dpy, cfg->arrow[0], &u.w, &u.i, &u.i,
+		&cfg->arrow_width, &cfg->arrow_height,
 		&u.u, &u.u)) return false;
-		
+
 	return true;
 }
 
@@ -692,7 +732,7 @@ bool cmd_button_release(uint argc, char ** argv)
 bool cmd_modifier(uint argc, char ** argv)
 {
 	if (argc != 3) return false;
-		
+
 	uint mod;
 	if (!to_modifier(argv[1], &mod))
 		return false;
@@ -732,7 +772,7 @@ bool cmd_key(uint argc, char ** argv)
 	cfg_key * cfg = realloc<cfg_key>(config::keys, n + 1);
 
 	cfg[n].key = key;
-	cfg[n].mod = mod;	
+	cfg[n].mod = mod;
 	cfg[n].act = act;
 
 	config::keys = cfg;
@@ -816,7 +856,7 @@ bool cmd_sub_menu(uint argc, char ** argv)
 const command commands[] =
 {
 	{ "Include", cmd_include },
-	{ "Font", cmd_font },	
+	{ "Font", cmd_font },
 	{ "Cursor", cmd_cursor },
 	{ "CursorColor", cmd_cursor_color },
 	{ "SnapDistance", cmd_snap_dist },
@@ -828,6 +868,8 @@ const command commands[] =
 	{ "TitleFGColor", cmd_title_fg_color },
 	{ "TitlePixmap", cmd_title_pixmap },
 	{ "TitleText", cmd_title_text },
+	{ "TitleLeft", cmd_title_left },
+	{ "TitleRight", cmd_title_right },
 	{ "NumBorder", cmd_num_border },
 	{ "Border", cmd_border },
 	{ "BorderColor", cmd_border_color },

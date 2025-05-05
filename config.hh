@@ -48,6 +48,10 @@ struct cfg_titlebar : cfg_border
 	ulong fg_color[4];
 #endif
 	cfg_rect title;
+	uint left_width;
+	uint right_width;
+	Pixmap left[4];
+	Pixmap right[4];
 };
 
 struct cfg_util : cfg_border
@@ -58,18 +62,21 @@ struct cfg_util : cfg_border
 	ulong fg_color[4];
 #endif
 	uint left, right, height, baseline;
+	uint arrow_width;
+	uint arrow_height;
+	Pixmap arrow[2];
 };
 
 struct cfg_style
 {
 	uint top, left, right, bottom;
+	cfg_border * borders;
+	uint num_borders;
 	union
 	{
 		cfg_titlebar titlebar;
 		cfg_util util;
 	};
-	cfg_border * borders;
-	uint num_borders;
 };
 
 class action;
@@ -110,16 +117,13 @@ namespace config
 #endif
 	extern Cursor cursor;
 	extern cfg_style style[NUM_STYLES];
-	extern Pixmap menu_arrow[2];
-	extern uint menu_arrow_width;
-	extern uint menu_arrow_height;
-	extern uint max_menu_width;
 	extern cfg_actions button_press[NUM_BTN_ACT];
 	extern cfg_actions button_release[NUM_BTN_ACT];
 	extern cfg_key * keys;
 	extern uint num_keys;
 	extern uint modifier;
 	extern uint mod_act;
+	extern uint max_menu_width;
 	extern uint snap_dist[4];
 	extern uint workspaces;
 

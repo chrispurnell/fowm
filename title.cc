@@ -11,7 +11,7 @@ title_window * title_window::create(frame_window * fwin)
 	decor_window::make_rectangle(&rect, &cfg->position, fwin->width(), fwin->height());
 
 	Window win = decor_window::create_window(fwin->id(),
-		ButtonPressMask | ButtonReleaseMask | ButtonMotionMask | 
+		ButtonPressMask | ButtonReleaseMask | ButtonMotionMask |
 		EnterWindowMask | LeaveWindowMask | ExposureMask,
 		&rect, cfg->bg_color[ci], cfg->pixmap[ci]);
 	title_window * twin = mnew(title_window, win, fwin, cfg->act_idx, cfg->num_col);
@@ -97,35 +97,101 @@ void title_window::calc_title()
 #ifdef USE_XFT
 void title_window::expose(XExposeEvent * ev)
 {
-	uint len = frame()->name_len();
-	if (!len) return;
-
-	if (ev)
-	{
-		XRectangle rect = {};
-		rect.x = ev->x;
-		rect.y = ev->y;
-		rect.width = ev->width;
-		rect.height = ev->height;
-		XftDrawSetClipRectangles(w_draw, 0, 0, &rect, 1);
-	}
-	else
-	{
-		XftDrawSetClip(w_draw, nullptr);
-	}
-
-	const char * str = frame()->name();
 	cfg_titlebar * cfg = &config::style[frame()->style()].titlebar;
 	uint ci = color_index();
-	XftDrawStringUtf8(w_draw, cfg->fg_color + ci, config::font, t_x, t_y, str_cast(str), len);
+
+	uint len = frame()->name_len();
+	if (len)
+	{
+		if (ev)
+		{
+			XRectangle rect = {};
+			rect.x = ev->x;
+			rect.y = ev->y;
+			rect.width = ev->width;
+			rect.height = ev->height;
+			XftDrawSetClipRectangles(w_draw, 0, 0, &rect, 1);
+		}
+		else
+		{
+			XftDrawSetClip(w_draw, nullptr);
+		}
+
+		const char * str = frame()->name();
+		XftDrawStringUtf8(w_draw, cfg->fg_color + ci, config::font, t_x, t_y, str_cast(str), len);
+	}
+
+	Pixmap lpm = cfg->left[ci];
+	if (lpm)
+	{
+		int w = cfg->left_width;
+		int h = w_height;
+		int x = 0;
+		int y = 0;
+		if (ev)
+		{
+			if (ev->x > x) { w -= ev->x - x; x = ev->x; }
+			if (ev->y > y) { h -= ev->y - y; y = ev->y; }
+			int mw = ev->x + ev->width - x;
+			int mh = ev->y + ev->height - y;
+			if (w > mw) { w = mw; }
+			if (h > mh) { h = mh; }
+		}
+		if (w > 0 && h > 0)
+		{
+			XCopyArea(dpy, lpm, id(), screen->gc(), x, y, w, h, x, y);
+		}
+	}
+
+	Pixmap rpm = cfg->right[ci];
+	if (rpm)
+	{
+		int w = cfg->right_width;
+		int h = w_height;
+		int x = w_width - w;
+		int y = 0;
+		int z = x;
+		if (ev)
+		{
+			if (ev->x > x) { w -= ev->x - x; x = ev->x; }
+			if (ev->y > y) { h -= ev->y - y; y = ev->y; }
+			int mw = ev->x + ev->width - x;
+			int mh = ev->y + ev->height - y;
+			if (w > mw) { w = mw; }
+			if (h > mh) { h = mh; }
+		}
+		if (w > 0 && h > 0)
+		{
+			XCopyArea(dpy, lpm, id(), screen->gc(), x - z, y, w, h, x, y);
+		}
+	}
 }
 #else
 void title_window::expose(XExposeEvent * ev)
 {
 	if (ev && ev->count) return;
+
 	uint len = frame()->name_len();
-	if (!len) return;
-	const char * str = frame()->name();
-	XDrawString(dpy, id(), w_gc, t_x, t_y, str, len);
+	if (len)
+	{
+		const char * str = frame()->name();
+		XDrawString(dpy, id(), w_gc, t_x, t_y, str, len);
+	}
+
+	cfg_titlebar * cfg = &config::style[frame()->style()].titlebar;
+	uint ci = color_index();
+	Pixmap lpm = cfg->left[ci];
+	if (lpm)
+	{
+		uint w = cfg->left_width;
+		XCopyArea(dpy, lpm, id(), w_gc, 0, 0, w, w_height, 0, 0);
+	}
+
+	Pixmap rpm = cfg->right[ci];
+	if (rpm)
+	{
+		uint w = cfg->right_width;
+		XCopyArea(dpy, rpm, id(), w_gc, 0, 0, w, w_height, w_width - w, 0);
+	}
 }
 #endif
