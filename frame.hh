@@ -102,7 +102,7 @@ public:
 	void shade(bool);
 	void set_fullscreen(bool);
 
-	void deiconify();	
+	void deiconify();
 	void iconify();
 	void map();
 	void unmap();

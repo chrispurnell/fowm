@@ -66,7 +66,7 @@ void frame_window::read_size_hints(Window win, XSizeHints * hints)
 		hints->min_height = 1;
 		flags |= PMinSize;
 	}
-		
+
 	if (!(flags & PBaseSize))
 	{
 		hints->base_width = 0;
@@ -107,7 +107,6 @@ void frame_window::read_size_hints(Window win, XSizeHints * hints)
 		{
 			flags &= ~PAspect;
 		}
-			
 	}
 
 	if (!(flags & PWinGravity))
@@ -139,7 +138,7 @@ static void adjust_position(XSizeHints * hints, cfg_style * cfg)
 		break;
 
 	case CenterGravity:
-		x -= (cfg->left + cfg->right) / 2;		
+		x -= (cfg->left + cfg->right) / 2;
 		y -= (cfg->top + cfg->bottom) / 2;
 		break;
 
@@ -202,7 +201,7 @@ static void revert_position(int gravity, int * xp, int * yp, cfg_style * cfg)
 		break;
 
 	case CenterGravity:
-		x += (cfg->left + cfg->right) / 2;		
+		x += (cfg->left + cfg->right) / 2;
 		y += (cfg->top + cfg->bottom) / 2;
 		break;
 
@@ -239,7 +238,8 @@ void frame_window::set_frame_extents(Window win, uchar style)
 {
 	cfg_style * cfg = config::style + style;
 	ulong data[4] = { cfg->left, cfg->right, cfg->top, cfg->bottom };
-	XChangeProperty(dpy, win, NET_FRAME_EXTENTS, XA_CARDINAL, 32, PropModeReplace, reinterpret_cast<uchar *>(data), 4);	
+	XChangeProperty(dpy, win, NET_FRAME_EXTENTS, XA_CARDINAL, 32,
+		PropModeReplace, reinterpret_cast<uchar *>(data), 4);
 }
 
 static bool is_shaped(Window win)
@@ -248,7 +248,7 @@ static bool is_shaped(Window win)
 	union { int i; uint u; } u;
 
 	XShapeQueryExtents(dpy, win, &shaped,
-		&u.i, &u.i, &u.u, &u.u, 
+		&u.i, &u.i, &u.u, &u.u,
 		&u.i, &u.i, &u.i, &u.u, &u.u);
 
 	return shaped != 0;
@@ -864,7 +864,7 @@ void frame_window::check_snap(int * x, int * y)
 		screen->frame_list.first(); win; win = win->next())
 	{
 		if (win == this) continue;
-		
+
 		int x3 = win->w_x;
 		int y3 = win->w_y;
 		int x4 = x3 + win->w_width;
@@ -898,7 +898,6 @@ void frame_window::check_snap(int * x, int * y)
 				*x = x4;
 				continue;
 			}
-			
 		}
 	}
 
@@ -1010,7 +1009,7 @@ void frame_window::resize(int grav, int x, int y, uint width, uint height)
 			aw = max_ax * n / m;
 			ah = max_ay * n / m;
 		}
-			
+
 		w = aw + base_w;
 		h = ah + base_h;
 	}
@@ -1138,7 +1137,7 @@ void frame_window::maximize(uchar max)
 			{
 				saved_x = x;
 				saved_width = w;
-				
+
 				x = 0;
 				w = screen->width() - bx;
 			}

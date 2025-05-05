@@ -80,7 +80,6 @@ int main(int argc, char ** argv)
 		return 1;
 	}
 
-	
 	set_signals();
 
 	int shape_event = 0;

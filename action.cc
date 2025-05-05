@@ -197,7 +197,6 @@ public:
 	{
 		if (win) win->maximize(MAXIMIZE_ALL);
 	}
-	
 }
 act_maximize;
 
@@ -213,7 +212,6 @@ public:
 	{
 		if (win) win->maximize(MAXIMIZE_H);
 	}
-	
 }
 act_maximize_horiz;
 
@@ -229,7 +227,6 @@ public:
 	{
 		if (win) win->maximize(MAXIMIZE_V);
 	}
-	
 }
 act_maximize_vert;
 
@@ -626,7 +623,7 @@ public:
 		top = false;
 		right = false;
 		bottom = false;
-	} 
+	}
 
 	void motion_event(XMotionEvent * ev, frame_window * win) override
 	{

@@ -146,7 +146,7 @@ void info_window::expose(XExposeEvent * ev)
 	}
 
 	cfg_util * cfg = &config::style[STYLE_INFO].util;
-        XftDrawStringUtf8(w_draw, cfg->fg_color, config::font, cfg->left, cfg->baseline, str_cast(w_text), w_text_len);
+	XftDrawStringUtf8(w_draw, cfg->fg_color, config::font, cfg->left, cfg->baseline, str_cast(w_text), w_text_len);
 }
 #else
 void info_window::expose(XExposeEvent * ev)

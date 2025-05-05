@@ -19,7 +19,7 @@ bool str_eq(const char * s1, const char * s2)
 	return false;
 }
 
-bool to_int(const char * str, int * ret) 
+bool to_int(const char * str, int * ret)
 {
 	char * end;
 	long l = strtol(str, &end, 0);
@@ -29,7 +29,7 @@ bool to_int(const char * str, int * ret)
 	return true;
 }
 
-bool to_int(const char * str, uint * ret) 
+bool to_int(const char * str, uint * ret)
 {
 	char * end;
 	long l = strtol(str, &end, 0);

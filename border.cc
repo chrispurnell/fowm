@@ -17,7 +17,7 @@ border_window * border_window::create(uint len, frame_window * fwin)
 		decor_window::make_rectangle(&rect, &cfg[i].position, width, height);
 		uint ci = decor_window::color_index(cfg[i].num_col, f);
 		Window win = decor_window::create_window(pwin,
-			ButtonPressMask | ButtonReleaseMask | ButtonMotionMask | 
+			ButtonPressMask | ButtonReleaseMask | ButtonMotionMask |
 			EnterWindowMask | LeaveWindowMask,
 			&rect, cfg[i].bg_color[ci], cfg[i].pixmap[ci]);
 		new(ptr + i) border_window(win, fwin, i, cfg[i].act_idx, cfg[i].num_col, 0);

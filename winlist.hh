@@ -41,7 +41,7 @@ void window_list::remove(frame_window * w)
 uint window_list::length()
 {
 	uint n = 0;
-		
+
 	frame_window * p = l_first;
 	while (p)
 	{
