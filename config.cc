@@ -408,38 +408,102 @@ bool cmd_title_text(uint argc, char ** argv)
 	return true;
 }
 
-bool cmd_title_left(uint argc, char ** argv)
+bool cmd_num_title_border(uint argc, char ** argv)
+{
+	if (argc != 2) return false;
+
+	if (!(c_style & STYLE_TITLEBAR))
+		return false;
+
+	uint num;
+	if (!to_int(argv[1], &num))
+		return false;
+
+	cfg_titlebar * cfg = &config::style[c_style].titlebar;
+	if (cfg->borders) free(cfg->borders);
+
+	cfg->borders = calloc<cfg_border>(num);
+	cfg->num_borders = num;
+
+	return true;
+}
+
+bool cmd_title_border(uint argc, char ** argv)
+{
+	if (argc != 6) return false;
+
+	if (!(c_style & STYLE_TITLEBAR))
+		return false;
+
+	uint idx;
+	if (!to_int(argv[1], &idx))
+		return false;
+
+	cfg_titlebar * ctp = &config::style[c_style].titlebar;
+	if (idx >= ctp->num_borders)
+		return false;
+
+	cfg_border * cfg = ctp->borders + idx;
+
+	if (!to_int(argv[2], &cfg->position.left))
+		return false;
+	if (!to_int(argv[3], &cfg->position.top))
+		return false;
+	if (!to_int(argv[4], &cfg->position.right))
+		return false;
+	if (!to_int(argv[5], &cfg->position.bottom))
+		return false;
+
+	return true;
+}
+
+bool cmd_title_border_color(uint argc, char ** argv)
 {
 	if (argc < 3 || argc > 6) return false;
 
 	if (!(c_style & STYLE_TITLEBAR))
 		return false;
 
-	cfg_style * csp = config::style + c_style;
-	if (!to_int(argv[1], &csp->titlebar.left_width))
+	uint idx;
+	if (!to_int(argv[1], &idx))
+		return false;
+
+	cfg_titlebar * ctp = &config::style[c_style].titlebar;
+	if (idx >= ctp->num_borders)
 		return false;
 
 	uint n = argc - 2;
-	Pixmap * cfg = csp->titlebar.left;
+	cfg_border * cbp = ctp->borders + idx;
+
+	ulong * cfg = cbp->bg_color;
 	for (uint i = 0; i < n; i++)
 	{
-		if (!pixmap::load(argv[2 + i], cfg + i))
+		if (!to_color(argv[2 + i], cfg + i))
 			return false;
 	}
 
 	return true;
 }
 
-bool cmd_title_right(uint argc, char ** argv)
+bool cmd_title_border_pixmap(uint argc, char ** argv)
 {
 	if (argc < 3 || argc > 6) return false;
 
-	cfg_style * csp = config::style + c_style;
-	if (!to_int(argv[1], &csp->titlebar.right_width))
+	if (!(c_style & STYLE_TITLEBAR))
+		return false;
+
+	uint idx;
+	if (!to_int(argv[1], &idx))
+		return false;
+
+	cfg_titlebar * ctp = &config::style[c_style].titlebar;
+	if (idx >= ctp->num_borders)
 		return false;
 
 	uint n = argc - 2;
-	Pixmap * cfg = csp->titlebar.right;
+	cfg_border * cbp = ctp->borders + idx;
+
+	Pixmap * cfg = cbp->pixmap;
 	for (uint i = 0; i < n; i++)
 	{
 		if (!pixmap::load(argv[2 + i], cfg + i))
@@ -868,8 +932,10 @@ const command commands[] =
 	{ "TitleFGColor", cmd_title_fg_color },
 	{ "TitlePixmap", cmd_title_pixmap },
 	{ "TitleText", cmd_title_text },
-	{ "TitleLeft", cmd_title_left },
-	{ "TitleRight", cmd_title_right },
+	{ "NumTitleDecor", cmd_num_title_border },
+	{ "TitleDecor", cmd_title_border },
+	{ "TitleDecorColor", cmd_title_border_color },
+	{ "TitleDecorPixmap", cmd_title_border_pixmap },
 	{ "NumBorder", cmd_num_border },
 	{ "Border", cmd_border },
 	{ "BorderColor", cmd_border_color },

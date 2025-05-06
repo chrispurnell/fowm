@@ -66,7 +66,7 @@ void menu_window::init()
 
 		n = csp->num_borders;
 		menu->w_num_decor = n;
-		menu->w_decor = n ? udecor_window::create(n, menu, csp->borders, w, h) : nullptr;
+		menu->w_decor = n ? udecor_window::create(n, menu, csp->borders, w, h, 0) : nullptr;
 
 		cfg->window = menu;
 	}

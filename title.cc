@@ -16,8 +16,14 @@ title_window * title_window::create(frame_window * fwin)
 		&rect, cfg->bg_color[ci], cfg->pixmap[ci]);
 	title_window * twin = mnew(title_window, win, fwin, cfg->act_idx, cfg->num_col);
 
-	twin->w_width = rect.width;
-	twin->w_height = rect.height;
+	uint w = rect.width;
+	uint h = rect.height;
+	twin->w_width = w;
+	twin->w_height = h;
+
+	uint n = cfg->num_borders;
+	twin->w_num_decor = n;
+	twin->w_decor = n ? udecor_window::create(n, twin, cfg->borders, w, h, ci) : nullptr;
 
 #ifdef USE_XFT
 	twin->w_draw = XftDrawCreate(dpy, win, screen->visual(), screen->colormap());
@@ -34,6 +40,7 @@ title_window * title_window::create(frame_window * fwin)
 
 void title_window::destroy()
 {
+	if (w_decor) udecor_window::destroy(w_decor, w_num_decor);
 #ifdef USE_XFT
 	XftDrawDestroy(w_draw);
 #else
@@ -46,9 +53,10 @@ void title_window::destroy()
 
 void title_window::set_background()
 {
-	cfg_titlebar * cfg = &config::style[frame()->style()].titlebar;
 	uint ci = color_index();
+	cfg_titlebar * cfg = &config::style[frame()->style()].titlebar;
 	decor_window::set_background(id(), cfg->bg_color[ci], cfg->pixmap[ci]);
+	if (w_decor) udecor_window::set_background(w_decor, w_num_decor, cfg->borders, ci);
 #ifndef USE_XFT
 	XGCValues values;
 	values.foreground = cfg->fg_color[ci];
@@ -63,8 +71,14 @@ void title_window::set_size()
 	rectangle rect;
 	decor_window::make_rectangle(&rect, &cfg->position, frame()->width(), frame()->height());
 	decor_window::set_size(id(), &rect);
-	w_width = rect.width;
-	w_height = rect.height;
+
+	uint w = rect.width;
+	uint h = rect.height;
+	w_width = w;
+	w_height = h;
+
+	if (w_decor) udecor_window::set_size(w_decor, w_num_decor, cfg->borders, w, h);
+
 	calc_title();
 	expose(nullptr);
 }
@@ -73,12 +87,12 @@ void title_window::calc_title()
 {
 	uint len = frame()->name_len();
 	if (!len) return;
-	const char * str = frame()->name();
 
 	cfg_rect * cfg = &config::style[frame()->style()].titlebar.title;
 	rectangle rect;
 	decor_window::make_rectangle(&rect, cfg, w_width, w_height);
 
+	const char * str = frame()->name();
 #ifdef USE_XFT
 	XGlyphInfo info;
 	XftTextExtentsUtf8(dpy, config::font, str_cast(str), len, &info);
@@ -97,101 +111,35 @@ void title_window::calc_title()
 #ifdef USE_XFT
 void title_window::expose(XExposeEvent * ev)
 {
-	cfg_titlebar * cfg = &config::style[frame()->style()].titlebar;
-	uint ci = color_index();
-
 	uint len = frame()->name_len();
-	if (len)
-	{
-		if (ev)
-		{
-			XRectangle rect = {};
-			rect.x = ev->x;
-			rect.y = ev->y;
-			rect.width = ev->width;
-			rect.height = ev->height;
-			XftDrawSetClipRectangles(w_draw, 0, 0, &rect, 1);
-		}
-		else
-		{
-			XftDrawSetClip(w_draw, nullptr);
-		}
+	if (!len) return;
 
-		const char * str = frame()->name();
-		XftDrawStringUtf8(w_draw, cfg->fg_color + ci, config::font, t_x, t_y, str_cast(str), len);
+	if (ev)
+	{
+		XRectangle rect = {};
+		rect.x = ev->x;
+		rect.y = ev->y;
+		rect.width = ev->width;
+		rect.height = ev->height;
+		XftDrawSetClipRectangles(w_draw, 0, 0, &rect, 1);
+	}
+	else
+	{
+		XftDrawSetClip(w_draw, nullptr);
 	}
 
-	Pixmap lpm = cfg->left[ci];
-	if (lpm)
-	{
-		int w = cfg->left_width;
-		int h = w_height;
-		int x = 0;
-		int y = 0;
-		if (ev)
-		{
-			if (ev->x > x) { w -= ev->x - x; x = ev->x; }
-			if (ev->y > y) { h -= ev->y - y; y = ev->y; }
-			int mw = ev->x + ev->width - x;
-			int mh = ev->y + ev->height - y;
-			if (w > mw) { w = mw; }
-			if (h > mh) { h = mh; }
-		}
-		if (w > 0 && h > 0)
-		{
-			XCopyArea(dpy, lpm, id(), screen->gc(), x, y, w, h, x, y);
-		}
-	}
-
-	Pixmap rpm = cfg->right[ci];
-	if (rpm)
-	{
-		int w = cfg->right_width;
-		int h = w_height;
-		int x = w_width - w;
-		int y = 0;
-		int z = x;
-		if (ev)
-		{
-			if (ev->x > x) { w -= ev->x - x; x = ev->x; }
-			if (ev->y > y) { h -= ev->y - y; y = ev->y; }
-			int mw = ev->x + ev->width - x;
-			int mh = ev->y + ev->height - y;
-			if (w > mw) { w = mw; }
-			if (h > mh) { h = mh; }
-		}
-		if (w > 0 && h > 0)
-		{
-			XCopyArea(dpy, lpm, id(), screen->gc(), x - z, y, w, h, x, y);
-		}
-	}
+	uint ci = color_index();
+	cfg_titlebar * cfg = &config::style[frame()->style()].titlebar;
+	const char * str = frame()->name();
+	XftDrawStringUtf8(w_draw, cfg->fg_color + ci, config::font, t_x, t_y, str_cast(str), len);
 }
 #else
 void title_window::expose(XExposeEvent * ev)
 {
 	if (ev && ev->count) return;
-
 	uint len = frame()->name_len();
-	if (len)
-	{
-		const char * str = frame()->name();
-		XDrawString(dpy, id(), w_gc, t_x, t_y, str, len);
-	}
-
-	cfg_titlebar * cfg = &config::style[frame()->style()].titlebar;
-	uint ci = color_index();
-	Pixmap lpm = cfg->left[ci];
-	if (lpm)
-	{
-		uint w = cfg->left_width;
-		XCopyArea(dpy, lpm, id(), w_gc, 0, 0, w, w_height, 0, 0);
-	}
-
-	Pixmap rpm = cfg->right[ci];
-	if (rpm)
-	{
-		uint w = cfg->right_width;
-		XCopyArea(dpy, rpm, id(), w_gc, 0, 0, w, w_height, w_width - w, 0);
-	}
+	if (!len) return;
+	const char * str = frame()->name();
+	XDrawString(dpy, id(), w_gc, t_x, t_y, str, len);
 }
 #endif
