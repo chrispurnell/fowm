@@ -48,10 +48,8 @@ struct cfg_titlebar : cfg_border
 	ulong fg_color[4];
 #endif
 	cfg_rect title;
-	uint left_width;
-	uint right_width;
-	Pixmap left[4];
-	Pixmap right[4];
+	cfg_border * borders;
+	uint num_borders;
 };
 
 struct cfg_util : cfg_border

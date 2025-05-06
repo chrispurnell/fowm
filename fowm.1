@@ -135,14 +135,14 @@ This is useful for all decoration styles.
 .TP
 .B NumBorder \fInumber
 Sets the number of border decoration pieces.
-There needs to be done for each decoration style that uses them and before
+This needs to be done for each decoration style that uses them and before
 any \fBBorder\fR, \fBBorderColor\fR or \fBBorderPixmap\fR commands are used.
 .IP
 This is useful for all decoration styles since it is used for any decoration
 that is not the title bar, such as title bar buttons.
 .TP
 .B Border \fIindex group left top right bottom
-The sets the rectangle that this border piece will occupy.
+This sets the rectangle that this border piece will occupy.
 Positive values are relative to the left or top edge of the window
 and negative values are relative to the right or bottom edge of the window.
 .IP
@@ -211,17 +211,46 @@ this rectangle.
 .IP
 Only useful for \fBNormal\fR and \fBNoBorder\fR styles.
 .TP
-.B TitleLeft \fIwidth pixmap\fR...
-.IP
-Sets the \fIwidth\fR and \fIpixmap\fRs for the left edge decoration of the
-titlebar.
+.B NumTitleDecor \fInumber
+Sets the number of titlebar decoration pieces.
+This needs to be done for each decoration style that uses them and before
+any \fBTileDecor\fR, \fBTitleDecorColor\fR or \fBTitleDecorPixmap\fR
+commands are used.
 .IP
 Only useful for \fBNormal\fR and \fBNoBorder\fR styles.
 .TP
-.B TitleRight \fIwidth pixmap\fR...
+.B TitleDecor \fIindex left top right bottom
+This sets the rectangle that this titlebar decoration piece will occupy.
+Similar coordinate system as for the \fBBorder\fR command only it is
+within the titlebar and not the window frame.
 .IP
-Sets the \fIwidth\fR and \fIpixmap\fRs for the right edge decoration of the
-titlebar.
+This \fIindex\fR selected which decoration piece is being set.
+They are numbered from zero.
+.IP
+Only useful for \fBNormal\fR and \fBNoBorder\fR styles.
+.TP
+.B TitleDecorColor \fIindex color\fR...
+Sets the colors of a tilebar decoration piece.
+.IP
+Up to 4 colors can be specified, same as for \fBBorderColor\fR.
+.IP
+This \fIindex\fR is the same as the \fBTitleDecor\fR command.
+.IP
+Will override \fBTitleDecorPixmap\fR.
+.IP
+Only useful for \fBNormal\fR and \fBNoBorder\fR styles.
+.TP
+.B TitleDecorPixmap \fIindex pixmap\fR...
+Sets the pixmaps to be used for a title decoration piece.
+The \fIpixmap\fRs should be a path relative to the configuration directory
+of an xpm file to use.
+The pixmaps will be tiled across the rectangle.
+.IP
+Up to 4 pixmaps can be specified, the same as for colors with \fBBorderColor\fR.
+.IP
+This \fIindex\fR is the same as the \fBTitleDecor\fR command.
+.IP
+Will override \fBTitleDecorColor\fR.
 .IP
 Only useful for \fBNormal\fR and \fBNoBorder\fR styles.
 .TP

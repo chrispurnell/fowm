@@ -6,7 +6,7 @@
 #endif
 
 #include "main.hh"
-#include "decoration.hh"
+#include "utility.hh"
 
 class title_window final : public fdecor_window<title_window>
 {
@@ -16,8 +16,10 @@ private:
 #else
 	GC w_gc;
 #endif
+	udecor_window * w_decor;
 	uint w_width, w_height;
 	int t_x, t_y;
+	uint w_num_decor;
 
 	explicit title_window(Window win, frame_window * fwin, uchar act, uchar num) :
 		fdecor_window(win, fwin, 0, act, num) {}

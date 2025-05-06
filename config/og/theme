@@ -6,8 +6,11 @@ TitleBar 1 19 3 -36 19
 TitleText 2 1 -3 -2
 TitleFGColor "rgb:8/8/8" "rgb:c/c/c" "rgb:f/f/f" "rgb:f/f/f"
 TitlePixmap "og/title-un.xpm" "og/title-fo.xpm" "og/title-fo.xpm" "og/title-pr.xpm"
-TitleLeft 1 "og/title-le-un.xpm" "og/title-le-fo.xpm" "og/title-le-fo.xpm" "og/title-le-pr.xpm"
-TitleRight 1 "og/title-ri-un.xpm" "og/title-ri-fo.xpm" "og/title-ri-fo.xpm" "og/title-ri-pr.xpm"
+NumTitleDecor 2
+TitleDecor 0 0 0 1 -1
+TitleDecorPixmap 0 "og/title-le-un.xpm" "og/title-le-fo.xpm" "og/title-le-fo.xpm" "og/title-le-pr.xpm"
+TitleDecor 1 -2 0 -1 -1
+TitleDecorPixmap 1 "og/title-ri-un.xpm" "og/title-ri-fo.xpm" "og/title-ri-fo.xpm" "og/title-ri-pr.xpm"
 NumBorder 11
 Border 0 2 3 3 19 19
 BorderPixmap 0 "og/btn-clo-un.xpm" "og/btn-clo-fo.xpm" "og/btn-clo-ho.xpm" "og/btn-clo-pr.xpm"
@@ -38,8 +41,11 @@ TitleBar 1 16 0 -33 16
 TitleText 2 1 -3 -2
 TitleFGColor "rgb:8/8/8" "rgb:c/c/c" "rgb:f/f/f" "rgb:f/f/f"
 TitlePixmap "og/title-un.xpm" "og/title-fo.xpm" "og/title-fo.xpm" "og/title-pr.xpm"
-TitleLeft 1 "og/title-le-un.xpm" "og/title-le-fo.xpm" "og/title-le-fo.xpm" "og/title-le-pr.xpm"
-TitleRight 1 "og/title-ri-un.xpm" "og/title-ri-fo.xpm" "og/title-ri-fo.xpm" "og/title-ri-pr.xpm"
+NumTitleDecor 2
+TitleDecor 0 0 0 1 -1
+TitleDecorPixmap 0 "og/title-le-un.xpm" "og/title-le-fo.xpm" "og/title-le-fo.xpm" "og/title-le-pr.xpm"
+TitleDecor 1 -2 0 -1 -1
+TitleDecorPixmap 1 "og/title-ri-un.xpm" "og/title-ri-fo.xpm" "og/title-ri-fo.xpm" "og/title-ri-pr.xpm"
 NumBorder 3
 Border 0 2 0 0 16 16
 BorderPixmap 0 "og/btn-clo-un.xpm" "og/btn-clo-fo.xpm" "og/btn-clo-ho.xpm" "og/btn-clo-pr.xpm"

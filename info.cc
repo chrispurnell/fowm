@@ -69,7 +69,7 @@ void info_window::init()
 
 	uint n = cfg->num_borders;
 	iwin->w_num_decor = n;
-	iwin->w_decor = n ? udecor_window::create(n, iwin, cfg->borders, w, h) : nullptr;
+	iwin->w_decor = n ? udecor_window::create(n, iwin, cfg->borders, w, h, 0) : nullptr;
 
 	instance = iwin;
 }
