@@ -308,8 +308,10 @@ frame_window * frame_window::create(Window cwin, bool restore, int x, int y, uin
 	{
 		int w = cw + cfg->left + cfg->right;
 		int h = ch + cfg->top + cfg->bottom;
-		x = (screen->width() - w) / 2;
-		y = (screen->height() - h) / 2;
+		w = screen->width() - w;
+		h = screen->height() - h;
+		x = w / 2;
+		y = h / 2;
 	}
 
 	bool fullscreen = is_fullscreen(cwin);
