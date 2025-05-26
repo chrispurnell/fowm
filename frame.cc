@@ -54,7 +54,7 @@ uchar frame_window::read_mwm_hints(Window win, uchar style)
 
 void frame_window::read_size_hints(Window win, XSizeHints * hints)
 {
-	int flags = 0;
+	long flags = 0;
 
 	long sup;
 	if (XGetWMNormalHints(dpy, win, hints, &sup))
@@ -455,7 +455,7 @@ int frame_window::read_wm_hints()
 	XWMHints * hints = XGetWMHints(dpy, client.id());
 	if (hints)
 	{
-		uint flags = hints->flags;
+		long flags = hints->flags;
 		if (flags & InputHint)
 			w_input = hints->input;
 		if (flags & StateHint)
@@ -978,7 +978,7 @@ void frame_window::resize(int grav, int x, int y, uint width, uint height)
 	int bx = cfg->left + cfg->right;
 	int by = cfg->top + cfg->bottom;
 
-	int flags = w_hints->flags;
+	long flags = w_hints->flags;
 	int w = width - bx;
 	int h = height - by;
 
@@ -1157,7 +1157,7 @@ void frame_window::maximize(uchar max)
 		}
 	}
 
-	int flags = w_hints->flags;
+	long flags = w_hints->flags;
 
 	if (flags & PMinSize)
 	{
