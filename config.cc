@@ -124,7 +124,7 @@ bool cmd_font(uint argc, char ** argv)
 	if (argc != 3) return false;
 
 	uint size;
-	if (!to_int(argv[2], &size))
+	if (!to_uint(argv[2], &size))
 		return false;
 	if (!size) return false;
 
@@ -184,7 +184,7 @@ bool cmd_snap_dist(uint argc, char ** argv)
 {
 	if (argc < 2 || argc > 5) return false;
 
-	if (!to_int(argv[1], config::snap_dist))
+	if (!to_uint(argv[1], config::snap_dist))
 		return false;
 
 	if (argc < 3)
@@ -195,7 +195,7 @@ bool cmd_snap_dist(uint argc, char ** argv)
 		return true;
 	}
 
-	if (!to_int(argv[2], config::snap_dist + 1))
+	if (!to_uint(argv[2], config::snap_dist + 1))
 		return false;
 
 	if (argc < 4)
@@ -205,12 +205,12 @@ bool cmd_snap_dist(uint argc, char ** argv)
 		return true;
 	}
 
-	if (!to_int(argv[3], config::snap_dist + 2))
+	if (!to_uint(argv[3], config::snap_dist + 2))
 		return false;
 
 	if (argc < 5) return false;
 
-	if (!to_int(argv[4], config::snap_dist + 3))
+	if (!to_uint(argv[4], config::snap_dist + 3))
 		return false;
 
 	return true;
@@ -221,7 +221,7 @@ bool cmd_workspaces(uint argc, char ** argv)
 	if (argc != 2) return false;
 
 	uint ws;
-	if (!to_int(argv[1], &ws))
+	if (!to_uint(argv[1], &ws))
 		return false;
 
 	if (ws < 1) return false;
@@ -274,13 +274,13 @@ bool cmd_border_width(uint argc, char ** argv)
 	if (argc != 5) return false;
 
 	cfg_style * cfg = config::style + c_style;
-	if (!to_int(argv[1], &cfg->top))
+	if (!to_uint(argv[1], &cfg->top))
 		return false;
-	if (!to_int(argv[2], &cfg->left))
+	if (!to_uint(argv[2], &cfg->left))
 		return false;
-	if (!to_int(argv[3], &cfg->right))
+	if (!to_uint(argv[3], &cfg->right))
 		return false;
-	if (!to_int(argv[4], &cfg->bottom))
+	if (!to_uint(argv[4], &cfg->bottom))
 		return false;
 
 	return true;
@@ -294,7 +294,7 @@ bool cmd_title_bar(uint argc, char ** argv)
 		return false;
 
 	uint act;
-	if (!to_int(argv[1], &act))
+	if (!to_uint(argv[1], &act))
 		return false;
 	if (act >= NUM_BTN_ACT)
 		return false;
@@ -416,7 +416,7 @@ bool cmd_num_title_border(uint argc, char ** argv)
 		return false;
 
 	uint num;
-	if (!to_int(argv[1], &num))
+	if (!to_uint(argv[1], &num))
 		return false;
 
 	cfg_titlebar * cfg = &config::style[c_style].titlebar;
@@ -436,7 +436,7 @@ bool cmd_title_border(uint argc, char ** argv)
 		return false;
 
 	uint idx;
-	if (!to_int(argv[1], &idx))
+	if (!to_uint(argv[1], &idx))
 		return false;
 
 	cfg_titlebar * ctp = &config::style[c_style].titlebar;
@@ -465,7 +465,7 @@ bool cmd_title_border_color(uint argc, char ** argv)
 		return false;
 
 	uint idx;
-	if (!to_int(argv[1], &idx))
+	if (!to_uint(argv[1], &idx))
 		return false;
 
 	cfg_titlebar * ctp = &config::style[c_style].titlebar;
@@ -493,7 +493,7 @@ bool cmd_title_border_pixmap(uint argc, char ** argv)
 		return false;
 
 	uint idx;
-	if (!to_int(argv[1], &idx))
+	if (!to_uint(argv[1], &idx))
 		return false;
 
 	cfg_titlebar * ctp = &config::style[c_style].titlebar;
@@ -518,7 +518,7 @@ bool cmd_num_border(uint argc, char ** argv)
 	if (argc != 2) return false;
 
 	uint num;
-	if (!to_int(argv[1], &num))
+	if (!to_uint(argv[1], &num))
 		return false;
 
 	cfg_style * cfg = config::style + c_style;
@@ -535,7 +535,7 @@ bool cmd_border(uint argc, char ** argv)
 	if (argc != 7) return false;
 
 	uint idx;
-	if (!to_int(argv[1], &idx))
+	if (!to_uint(argv[1], &idx))
 		return false;
 
 	cfg_style * csp = config::style + c_style;
@@ -543,7 +543,7 @@ bool cmd_border(uint argc, char ** argv)
 		return false;
 
 	uint act;
-	if (!to_int(argv[2], &act))
+	if (!to_uint(argv[2], &act))
 		return false;
 	if (act >= NUM_BTN_ACT)
 		return false;
@@ -568,7 +568,7 @@ bool cmd_border_color(uint argc, char ** argv)
 	if (argc < 3 || argc > 6) return false;
 
 	uint idx;
-	if (!to_int(argv[1], &idx))
+	if (!to_uint(argv[1], &idx))
 		return false;
 
 	cfg_style * csp = config::style + c_style;
@@ -594,7 +594,7 @@ bool cmd_border_pixmap(uint argc, char ** argv)
 	if (argc < 3 || argc > 6) return false;
 
 	uint idx;
-	if (!to_int(argv[1], &idx))
+	if (!to_uint(argv[1], &idx))
 		return false;
 
 	cfg_style * csp = config::style + c_style;
@@ -624,11 +624,11 @@ bool cmd_util_text(uint argc, char ** argv)
 
 	cfg_style * cfg = config::style + c_style;
 
-	if (!to_int(argv[1], &cfg->util.left))
+	if (!to_uint(argv[1], &cfg->util.left))
 		return false;
-	if (!to_int(argv[2], &cfg->util.right))
+	if (!to_uint(argv[2], &cfg->util.right))
 		return false;
-	if (!to_int(argv[3], &cfg->util.height))
+	if (!to_uint(argv[3], &cfg->util.height))
 		return false;
 
 	return true;
@@ -740,7 +740,7 @@ bool cmd_menu_width(uint argc, char ** argv)
 	if (argc != 2) return false;
 
 	uint max;
-	if (!to_int(argv[1], &max))
+	if (!to_uint(argv[1], &max))
 		return false;
 
 	config::max_menu_width = max;
@@ -752,12 +752,12 @@ bool cmd_button_press(uint argc, char ** argv)
 	if (argc < 4 || argc > 5) return false;
 
 	uint btn;
-	if (!to_int(argv[1], &btn))
+	if (!to_uint(argv[1], &btn))
 		return false;
 	if (--btn >= NUM_BUTTONS) return false;
 
 	uint idx;
-	if (!to_int(argv[2], &idx))
+	if (!to_uint(argv[2], &idx))
 		return false;
 	if (idx >= NUM_BTN_ACT)
 		return false;
@@ -775,12 +775,12 @@ bool cmd_button_release(uint argc, char ** argv)
 	if (argc < 4 || argc > 5) return false;
 
 	uint btn;
-	if (!to_int(argv[1], &btn))
+	if (!to_uint(argv[1], &btn))
 		return false;
 	if (--btn >= NUM_BUTTONS) return false;
 
 	uint idx;
-	if (!to_int(argv[2], &idx))
+	if (!to_uint(argv[2], &idx))
 		return false;
 	if (idx >= NUM_BTN_ACT)
 		return false;
@@ -802,7 +802,7 @@ bool cmd_modifier(uint argc, char ** argv)
 		return false;
 
 	uint act;
-	if (!to_int(argv[2], &act))
+	if (!to_uint(argv[2], &act))
 		return false;
 	if (act >= NUM_BTN_ACT)
 		return false;

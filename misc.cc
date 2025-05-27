@@ -1,5 +1,3 @@
-#include <limits.h>
-
 #include "misc.hh"
 
 static char to_lower(char c)
@@ -23,17 +21,17 @@ bool to_int(const char * str, int * ret)
 {
 	char * end;
 	long l = strtol(str, &end, 0);
-	if (l < SHRT_MIN || l > SHRT_MAX) return false;
+	if (l < -32768 || l > 32767) return false;
 	if (*end) return false;
 	*ret = l;
 	return true;
 }
 
-bool to_int(const char * str, uint * ret)
+bool to_uint(const char * str, uint * ret)
 {
 	char * end;
 	long l = strtol(str, &end, 0);
-	if (l < 0 || l > USHRT_MAX) return false;
+	if (l < 0 || l > 65535) return false;
 	if (*end) return false;
 	*ret = l;
 	return true;

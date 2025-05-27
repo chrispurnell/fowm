@@ -20,7 +20,7 @@ inline void * operator new(size_t, void * p) { return p; }
 
 extern bool str_eq(const char *, const char *);
 extern bool to_int(const char *, int *);
-extern bool to_int(const char *, uint *);
+extern bool to_uint(const char *, uint *);
 
 inline const uchar * str_cast(const char * s) { return reinterpret_cast<const uchar *>(s); }
 inline uchar * str_cast(char * s) { return reinterpret_cast<uchar *>(s); }

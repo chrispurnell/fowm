@@ -72,7 +72,7 @@ public:
 	static send_action * create(const char * str)
 	{
 		uint ws;
-		if (!to_int(str, &ws)) return nullptr;
+		if (!to_uint(str, &ws)) return nullptr;
 
 		for (send_action * act = first; act; act = act->next)
 		{
@@ -114,7 +114,7 @@ public:
 	static goto_action * create(const char * str)
 	{
 		uint ws;
-		if (!to_int(str, &ws)) return nullptr;
+		if (!to_uint(str, &ws)) return nullptr;
 
 		for (goto_action * act = first; act; act = act->next)
 		{
