@@ -136,8 +136,8 @@ frame_window * root_window::find(Window id)
 
 void root_window::key_press(XKeyEvent * ev)
 {
-	int mod = ev->state;
-	int key = ev->keycode;
+	uint mod = ev->state;
+	uint key = ev->keycode;
 
 	uint n = config::num_keys;
 	for (uint i = 0; i < n; i++)

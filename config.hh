@@ -86,8 +86,8 @@ struct cfg_actions
 
 struct cfg_key
 {
-	int key;
-	int mod;
+	uint key;
+	uint mod;
 	action * act;
 };
 
