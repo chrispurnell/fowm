@@ -315,7 +315,8 @@ frame_window * frame_window::create(Window cwin, bool restore, int x, int y, uin
 	}
 
 	bool fullscreen = is_fullscreen(cwin);
-	int fx, fy, fw, fh;
+	int fx, fy;
+	uint fw, fh;
 
 	if (fullscreen)
 	{
