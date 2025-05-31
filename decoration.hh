@@ -46,12 +46,13 @@ public:
 template <class T>
 class fdecor_window : public decor_window
 {
-protected:
+	friend T;
+
+private:
 	explicit fdecor_window(Window win, frame_window * fwin, uint idx, uchar act, uchar num) :
 		decor_window(win, fwin, idx, act, num) {}
 	~fdecor_window() {}
 
-private:
 	void set_background() { static_cast<T *>(this)->set_background(); }
 
 public:
