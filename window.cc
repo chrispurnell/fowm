@@ -4,7 +4,7 @@
 
 class window::hashtable
 {
-	friend class window;
+	friend window;
 
 private:
 	window ** table;

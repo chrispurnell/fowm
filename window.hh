@@ -14,7 +14,7 @@ struct rectangle
 class window
 {
 	class hashtable;
-	friend class hashtable;
+	friend hashtable;
 
 private:
 	static hashtable db;

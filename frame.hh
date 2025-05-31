@@ -9,12 +9,13 @@
 #define MAXIMIZE_V 2
 #define MAXIMIZE_ALL 3
 
+class window_list;
 class frame_window;
 
 class window_node
 {
-	friend class window_list;
-	friend class frame_window;
+	friend window_list;
+	friend frame_window;
 
 private:
 	frame_window * n_next;
