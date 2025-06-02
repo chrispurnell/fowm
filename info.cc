@@ -39,8 +39,11 @@ void info_window::init()
 	int w = cfg->util.left + cfg->util.right + 1;
 	int h = cfg->util.height;
 
-	int x = (screen->width() - w) / 2;
-	int y = (screen->height() - h) / 2;
+	int sw = screen->width();
+	int sh = screen->height();
+
+	int x = (sw - w) / 2;
+	int y = (sh - h) / 2;
 
 	XSetWindowAttributes swa;
 	uint mask = cfg->util.pixmap[0] ?
@@ -89,9 +92,12 @@ void info_window::update()
 
 	if (w_width != w)
 	{
+		int sw = screen->width();
+		int sh = screen->height();
+
 		int h = cfg->util.height;
-		int x = (screen->width() - w) / 2;
-		int y = (screen->height() - h) / 2;
+		int x = (sw - w) / 2;
+		int y = (sh - h) / 2;
 		w_width = w;
 		XMoveResizeWindow(dpy, id(), x, y, w, h);
 		if (w_decor) udecor_window::set_size(w_decor, w_num_decor, cfg->borders, w, h);

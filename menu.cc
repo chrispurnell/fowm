@@ -79,7 +79,8 @@ int menuitem_window::a_y = 0;
 void menuitem_window::init()
 {
 	cfg_util * cfg = &config::style[STYLE_MENU].util;
-	a_y = (cfg->height - cfg->arrow_height) / 2;
+	int y = cfg->height - cfg->arrow_height;
+	a_y = y / 2;
 }
 
 void menu_window::toggle(cfg_menu * cfg, frame_window * frame, int x, int y)

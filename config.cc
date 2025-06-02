@@ -880,7 +880,7 @@ bool cmd_menu_item(uint argc, char ** argv)
 	action * act = action::create(argv[2], argv[3]);
 	if (!act) return false;
 
-	int n = last_menu->menu.nitems;
+	uint n = last_menu->menu.nitems;
 	cfg_menu_item * items = realloc<cfg_menu_item>(last_menu->menu.items, n + 1);
 	cfg_menu_item * item = items + n;
 
@@ -904,7 +904,7 @@ bool cmd_sub_menu(uint argc, char ** argv)
 	if (!menu) return false;
 	if (menu == last_menu) return false;
 
-	int n = last_menu->menu.nitems;
+	uint n = last_menu->menu.nitems;
 	cfg_menu_item * items = realloc<cfg_menu_item>(last_menu->menu.items, n + 1);
 	cfg_menu_item * item = items + n;
 

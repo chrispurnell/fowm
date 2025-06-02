@@ -308,10 +308,10 @@ frame_window * frame_window::create(Window cwin, bool restore, int x, int y, uin
 	{
 		int w = cw + cfg->left + cfg->right;
 		int h = ch + cfg->top + cfg->bottom;
-		w = screen->width() - w;
-		h = screen->height() - h;
-		x = w / 2;
-		y = h / 2;
+		int sw = screen->width();
+		int sh = screen->height();
+		x = (sw - w) / 2;
+		y = (sh - h) / 2;
 	}
 
 	bool fullscreen = is_fullscreen(cwin);
@@ -598,8 +598,8 @@ void frame_window::set_style(uchar style)
 	uint h = w_height - (cfg->top + cfg->bottom);
 
 	cfg = config::style + style;
-	int x = cfg->left;
-	int y = cfg->top;
+	uint x = cfg->left;
+	uint y = cfg->top;
 	w += x + cfg->right;
 	h += y + cfg->bottom;
 
@@ -923,7 +923,8 @@ void frame_window::check_snap(int * x, int * y)
 #if SNAP_CENTER
 	else if(d1)
 	{
-		int x3 = (sw - w_width) / 2;
+		int w = w_width;
+		int x3 = (sw - w) / 2;
 
 		if (x1 > x3 - d1 && x1 < x3 + d1)
 			*x = x3;
@@ -943,7 +944,8 @@ void frame_window::check_snap(int * x, int * y)
 #if SNAP_CENTER
 	else if (d1)
 	{
-		int y3 = (sh - w_height) / 2;
+		int h = w_height;
+		int y3 = (sh - h) / 2;
 
 		if (y1 > y3 - d1 && y1 < y3 + d1)
 			*y = y3;
@@ -976,8 +978,8 @@ void frame_window::move(int x, int y)
 void frame_window::resize(int grav, int x, int y, uint width, uint height)
 {
 	cfg_style * cfg = config::style + w_style;
-	int bx = cfg->left + cfg->right;
-	int by = cfg->top + cfg->bottom;
+	uint bx = cfg->left + cfg->right;
+	uint by = cfg->top + cfg->bottom;
 
 	long flags = w_hints->flags;
 	int w = width - bx;
@@ -1187,8 +1189,11 @@ void frame_window::maximize(uchar max)
 		h = (((h - base_h) / h_inc) * h_inc) + base_h;
 	}
 
-	uint nw = w + bx;
-	uint nh = h + by;
+	uint ow = w;
+	uint oh = h;
+
+	uint nw = ow + bx;
+	uint nh = oh + by;
 
 	w_x = x;
 	w_y = y;
@@ -1196,7 +1201,7 @@ void frame_window::maximize(uchar max)
 	w_height = nh;
 	w_shade = 0;
 	XMoveResizeWindow(dpy, id(), x, y, nw, nh);
-	XResizeWindow(dpy, client.id(), w, h);
+	XResizeWindow(dpy, client.id(), ow, oh);
 	if (w_title) w_title->set_size();
 	border_window::set_size(w_borders, w_num_borders, cfg->borders, nw, nh);
 	if (w_shaped) set_shape();
@@ -1272,8 +1277,8 @@ void frame_window::set_fullscreen(bool set)
 	}
 
 	cfg_style * cfg = config::style + style;
-	int cx = cfg->left;
-	int cy = cfg->top;
+	uint cx = cfg->left;
+	uint cy = cfg->top;
 	uint fw = cw + cx + cfg->right;
 	uint fh = ch + cy + cfg->bottom;
 
