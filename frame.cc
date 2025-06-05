@@ -1245,7 +1245,7 @@ void frame_window::shade(bool set)
 void frame_window::set_fullscreen(bool set)
 {
 	bool f = w_fullscreen;
-	char style;
+	uchar style;
 	int fx, fy;
 	uint cw, ch;
 
