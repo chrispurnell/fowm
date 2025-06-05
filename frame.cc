@@ -909,8 +909,8 @@ void frame_window::check_snap(int * x, int * y)
 
 	if (!(d1 || d2)) return;
 
-	root_window * scr = screen;
-	int sw = scr->width();
+	int sw = screen->width();
+	int sh = screen->height();
 
 	if (x1 > -d2 && x1 < d1)
 	{
@@ -930,8 +930,6 @@ void frame_window::check_snap(int * x, int * y)
 			*x = x3;
 	}
 #endif
-
-	int sh = scr->height();
 
 	if (y1 > -d2 && y1 < d1)
 	{
