@@ -626,6 +626,7 @@ void frame_window::set_style(uchar style)
 	if (w_shaped) set_shape();
 
 	set_frame_extents(client.id(), style);
+	check();
 }
 
 #ifdef USE_XFT
@@ -1238,6 +1239,7 @@ void frame_window::shade(bool set)
 	if (w_title) w_title->set_size();
 	border_window::set_size(w_borders, w_num_borders, cfg->borders, w, h);
 	if (w_shaped) set_shape();
+	check();
 }
 
 void frame_window::set_fullscreen(bool set)
