@@ -9,6 +9,8 @@
 #include "atoms.hh"
 #include "config.hh"
 
+#define SNAP_CENTER 0
+
 #define MWM_HINTS_DECORATIONS	2
 #define MWM_DECOR_ALL		1
 #define MWM_DECOR_BORDER	2
