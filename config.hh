@@ -122,7 +122,7 @@ namespace config
 	extern uint modifier;
 	extern uint mod_act;
 	extern uint max_menu_width;
-	extern uint snap_dist[4];
+	extern uint snap_dist[5];
 	extern uint workspaces;
 
 	void init(const char *);

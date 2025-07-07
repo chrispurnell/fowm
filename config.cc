@@ -30,7 +30,7 @@ uint config::num_keys = 0;
 uint config::modifier = 0;
 uint config::mod_act = 0;
 uint config::max_menu_width = 0;
-uint config::snap_dist[4] = {};
+uint config::snap_dist[5] = {};
 uint config::workspaces = 1;
 
 namespace
@@ -182,7 +182,7 @@ bool cmd_cursor_color(uint argc, char ** argv)
 
 bool cmd_snap_dist(uint argc, char ** argv)
 {
-	if (argc < 2 || argc > 5) return false;
+	if (argc < 2 || argc > 6) return false;
 
 	if (!to_uint(argv[1], config::snap_dist))
 		return false;
@@ -192,6 +192,7 @@ bool cmd_snap_dist(uint argc, char ** argv)
 		config::snap_dist[1] = config::snap_dist[0];
 		config::snap_dist[2] = config::snap_dist[0];
 		config::snap_dist[3] = config::snap_dist[0];
+		config::snap_dist[4] = config::snap_dist[0];
 		return true;
 	}
 
@@ -202,15 +203,31 @@ bool cmd_snap_dist(uint argc, char ** argv)
 	{
 		config::snap_dist[2] = config::snap_dist[0];
 		config::snap_dist[3] = config::snap_dist[1];
+		config::snap_dist[4] = 0;
 		return true;
 	}
 
 	if (!to_uint(argv[3], config::snap_dist + 2))
 		return false;
 
-	if (argc < 5) return false;
+	if (argc < 5)
+	{
+		config::snap_dist[4] = config::snap_dist[0];
+		config::snap_dist[2] = config::snap_dist[0];
+		config::snap_dist[3] = config::snap_dist[1];
+		return true;
+	}
 
 	if (!to_uint(argv[4], config::snap_dist + 3))
+		return false;
+
+	if (argc < 6)
+	{
+		config::snap_dist[4] = 0;
+		return true;
+	}
+
+	if (!to_uint(argv[5], config::snap_dist + 4))
 		return false;
 
 	return true;

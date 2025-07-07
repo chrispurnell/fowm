@@ -46,15 +46,21 @@ command.
 .TP
 .B SnapDistance \fIdistance\fR...
 Can be used to enable snapping when moving windows.
-One, two or four distances can be specified.
+Anything from one to five distances can be specified.
 .IP
-If four distances are given the first two are for window to screen edge snapping
-and the second two are for window to window snapping.
+If five distances are given the first two are for window to screen edge snapping,
+the second two are for window to window snapping.
 The first number being the maximum number of pixels the window will be moved
 towards the other edge and the second being the pixels it will be moved away.
+The fifth distance is for snapping to the center of the screen.
 .IP
-If two distances are given it is the equivalent to setting the second pair the
-same as the first.
+If four distances are given it is the same as setting the center snapping to zero.
+.IP
+If three distances are given it is the equivalent to setting the second pair the
+same as the first.  And the third distance is for center snapping.
+.IP
+If two distances are given it is the same as with three distances and setting
+center snapping to zero.
 .IP
 With one distance it is the same as setting all four values to the same thing.
 .TP

@@ -26,7 +26,7 @@ void menu_window::init()
 				s = cfg->items[i].menu->name;
 				aw = csp->util.arrow_width;
 			}
-#if USE_XFT
+#ifdef USE_XFT
 			XGlyphInfo info;
 			XftTextExtentsUtf8(dpy, config::font, str_cast(s), strlen(s), &info);
 			uint t = info.xOff;

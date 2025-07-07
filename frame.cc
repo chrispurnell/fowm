@@ -9,8 +9,6 @@
 #include "atoms.hh"
 #include "config.hh"
 
-#define SNAP_CENTER 0
-
 #define MWM_HINTS_DECORATIONS	2
 #define MWM_DECOR_ALL		1
 #define MWM_DECOR_BORDER	2
@@ -909,8 +907,9 @@ void frame_window::check_snap(int * x, int * y)
 
 	d1 = config::snap_dist[0];
 	d2 = config::snap_dist[1];
-
-	if (!(d1 || d2)) return;
+	int d3 = config::snap_dist[4];
+	
+	if (!(d1 || d2 || d3)) return;
 
 	int sw = screen->width();
 	int sh = screen->height();
@@ -923,16 +922,14 @@ void frame_window::check_snap(int * x, int * y)
 	{
 		*x = sw - w_width;
 	}
-#if SNAP_CENTER
-	else if(d1)
+	else if(d3)
 	{
 		int w = w_width;
 		int x3 = (sw - w) / 2;
 
-		if (x1 > x3 - d1 && x1 < x3 + d1)
+		if (x1 > x3 - d3 && x1 < x3 + d3)
 			*x = x3;
 	}
-#endif
 
 	if (y1 > -d2 && y1 < d1)
 	{
@@ -942,16 +939,14 @@ void frame_window::check_snap(int * x, int * y)
 	{
 		*y = sh - w_height;
 	}
-#if SNAP_CENTER
-	else if (d1)
+	else if (d3)
 	{
 		int h = w_height;
 		int y3 = (sh - h) / 2;
 
-		if (y1 > y3 - d1 && y1 < y3 + d1)
+		if (y1 > y3 - d3 && y1 < y3 + d3)
 			*y = y3;
 	}
-#endif
 }
 
 void frame_window::move(int x, int y)
