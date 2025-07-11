@@ -212,7 +212,7 @@ bool cmd_snap_dist(uint argc, char ** argv)
 
 	if (argc < 5)
 	{
-		config::snap_dist[4] = config::snap_dist[0];
+		config::snap_dist[4] = config::snap_dist[2];
 		config::snap_dist[2] = config::snap_dist[0];
 		config::snap_dist[3] = config::snap_dist[1];
 		return true;
