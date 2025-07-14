@@ -42,7 +42,7 @@ private:
 	~root_window() {}
 
 public:
-	class frame_window * focus;
+	frame_window * focus;
 	window_list frame_list;
 
 	static root_window * create(int);

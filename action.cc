@@ -66,7 +66,7 @@ private:
 	send_action & operator=(const send_action &) = delete;
 	~send_action() = delete;
 
-	send_action(uint ws) : next(first), workspace(ws) { first = this; }
+	explicit send_action(uint ws) : next(first), workspace(ws) { first = this; }
 
 public:
 	static send_action * create(const char * str)
@@ -108,7 +108,7 @@ private:
 	goto_action & operator=(const goto_action *) = delete;
 	~goto_action() = delete;
 
-	goto_action(uint ws) : next(first), workspace(ws) { first = this; }
+	explicit goto_action(uint ws) : next(first), workspace(ws) { first = this; }
 
 public:
 	static goto_action * create(const char * str)
