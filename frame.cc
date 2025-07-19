@@ -908,7 +908,7 @@ void frame_window::check_snap(int * x, int * y)
 	d1 = config::snap_dist[0];
 	d2 = config::snap_dist[1];
 	int d3 = config::snap_dist[4];
-	
+
 	if (!(d1 || d2 || d3)) return;
 
 	int sw = screen->width();

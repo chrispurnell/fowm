@@ -20,7 +20,6 @@ PROG=fowm
 OFILES=main.o screen.o frame.o client.o title.o border.o \
 	decoration.o info.o menu.o winmenu.o utility.o window.o \
 	action.o atoms.o pixmap.o cursor.o config.o misc.o
-
 CFILES=main.cc screen.cc frame.cc client.cc title.cc border.cc \
 	decoration.cc info.cc menu.cc winmenu.cc utility.cc window.cc \
 	action.cc atoms.cc pixmap.cc cursor.cc config.cc misc.cc
