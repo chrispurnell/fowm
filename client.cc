@@ -42,6 +42,9 @@ void client_window::motion_notify(XMotionEvent * ev)
 
 void client_window::focus_in(XFocusChangeEvent *)
 {
+	if (!w_frame->mapped())
+		return;
+
 	w_frame->set_focused();
 
 	frame_window * fwin = screen->focus;

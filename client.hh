@@ -3,10 +3,12 @@
 
 #include "window.hh"
 
+class frame_window;
+
 class client_window final : public window
 {
 private:
-	class frame_window * w_frame;
+	frame_window * w_frame;
 
 public:
 	explicit client_window(frame_window * fwin, Window win) :
