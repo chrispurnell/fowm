@@ -59,11 +59,11 @@ void root_window::init()
 {
 	Window info = info_window::get_id();
 	XChangeProperty(dpy, info, NET_SUPPORTING_WM_CHECK, XA_WINDOW, 32,
-		PropModeReplace, reinterpret_cast<uchar *>(&info), 4);
+		PropModeReplace, reinterpret_cast<uchar *>(&info), 1);
 	XChangeProperty(dpy, info, NET_WM_NAME, UTF8_STRING, 8,
 		PropModeReplace, reinterpret_cast<const uchar *>("fowm"), 4);
 	XChangeProperty(dpy, id(), NET_SUPPORTING_WM_CHECK, XA_WINDOW, 32,
-		PropModeReplace, reinterpret_cast<uchar *>(&info), 4);
+		PropModeReplace, reinterpret_cast<uchar *>(&info), 1);
 
 	Window rootwid;
 	Window parent;
