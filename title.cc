@@ -103,9 +103,9 @@ void title_window::calc_title()
 	int ascent = config::font->ascent;
 	int descent = config::font->descent;
 
-	t_x = rect.x + (rect.width - width) / 2;
+	t_x = rect.x + div2(rect.width - width);
 	if (t_x < rect.x) t_x = rect.x;
-	t_y = rect.y + (rect.height + ascent - descent) / 2;
+	t_y = rect.y + div2(rect.height + ascent - descent);
 }
 
 #ifdef USE_XFT

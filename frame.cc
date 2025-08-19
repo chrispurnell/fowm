@@ -310,8 +310,8 @@ frame_window * frame_window::create(Window cwin, bool restore, int x, int y, uin
 		int h = ch + cfg->top + cfg->bottom;
 		int sw = screen->width();
 		int sh = screen->height();
-		x = (sw - w) / 2;
-		y = (sh - h) / 2;
+		x = div2(sw - w);
+		y = div2(sh - h);
 	}
 
 	bool fullscreen = is_fullscreen(cwin);
@@ -922,10 +922,10 @@ void frame_window::check_snap(int * x, int * y)
 	{
 		*x = sw - w_width;
 	}
-	else if(d3)
+	else if (d3)
 	{
 		int w = w_width;
-		int x3 = (sw - w) / 2;
+		int x3 = div2(sw - w);
 
 		if (x1 > x3 - d3 && x1 < x3 + d3)
 			*x = x3;
@@ -942,7 +942,7 @@ void frame_window::check_snap(int * x, int * y)
 	else if (d3)
 	{
 		int h = w_height;
-		int y3 = (sh - h) / 2;
+		int y3 = div2(sh - h);
 
 		if (y1 > y3 - d3 && y1 < y3 + d3)
 			*y = y3;

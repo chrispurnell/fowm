@@ -80,7 +80,7 @@ void menuitem_window::init()
 {
 	cfg_util * cfg = &config::style[STYLE_MENU].util;
 	int y = cfg->height - cfg->arrow_height;
-	a_y = y / 2;
+	a_y = div2(y);
 }
 
 void menu_window::toggle(cfg_menu * cfg, frame_window * frame, int x, int y)

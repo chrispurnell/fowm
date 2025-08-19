@@ -25,4 +25,7 @@ extern bool to_uint(const char *, uint *);
 inline const uchar * str_cast(const char * s) { return reinterpret_cast<const uchar *>(s); }
 inline uchar * str_cast(char * s) { return reinterpret_cast<uchar *>(s); }
 
+template <typename T> T div2(T v) = delete;
+inline int div2(int v) { return v >> 1; }
+
 #endif

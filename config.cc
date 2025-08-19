@@ -1127,7 +1127,7 @@ void config::fini()
 	if (ih)
 	{
 		csp->util.height = ih + csp->top + csp->bottom;
-		csp->util.baseline = ((ih - h) / 2) + a + csp->top;
+		csp->util.baseline = div2(ih - h) + a + csp->top;
 	}
 	else
 	{
@@ -1139,7 +1139,7 @@ void config::fini()
 	int mh = cfg->height;
 	if (mh)
 	{
-		cfg->baseline = ((mh - h) / 2) + a;
+		cfg->baseline = div2(mh - h) + a;
 	}
 	else
 	{
