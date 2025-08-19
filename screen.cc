@@ -6,6 +6,7 @@
 #include "action.hh"
 #include "atoms.hh"
 #include "config.hh"
+#include "menu.hh"
 
 root_window * root_window::create(int scr)
 {
@@ -101,6 +102,8 @@ void root_window::set_workspace(uint ws)
 	if (ws > config::workspaces) ws = 1;
 
 	if (ws == s_workspace) return;
+
+	menu_window::close_all();
 
 	s_workspace = ws;
 

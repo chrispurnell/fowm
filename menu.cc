@@ -103,8 +103,11 @@ void menu_window::close_all()
 	for (menu_action * act = menu_action::first; act; act = act->next)
 	{
 		menu_window * win = act->menu.window;
-		win->w_sub_menu = nullptr;
-		win->close();
+		if (win->w_mapped)
+		{
+			win->w_sub_menu = nullptr;
+			win->close();
+		}
 	}
 }
 
