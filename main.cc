@@ -127,7 +127,9 @@ int main(int argc, char ** argv)
 
 		XNextEvent(dpy, &event);
 
-		if (!window::find(event.xany.window, &win))
+		Window id = event.xany.window;
+
+		if (!window::find(id, &win))
 		{
 			if (event.type == ClientMessage)
 				frame_window::xclient_message(&event.xclient);
@@ -154,6 +156,7 @@ int main(int argc, char ** argv)
 			win->button_release(&event.xbutton);
 			break;
 		case MotionNotify:
+			while (XCheckTypedWindowEvent(dpy, id, MotionNotify, &event)) {}
 			win->motion_notify(&event.xmotion);
 			break;
 		case EnterNotify:
