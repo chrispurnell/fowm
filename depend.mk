@@ -3,7 +3,7 @@ main.o: main.cc config.hh misc.hh screen.hh main.hh window.hh frame.hh \
  menu.hh winmenu.hh action.hh
 screen.o: screen.cc frame.hh client.hh window.hh misc.hh title.hh main.hh \
  utility.hh decoration.hh border.hh screen.hh info.hh action.hh atoms.hh \
- config.hh
+ config.hh menu.hh
 frame.o: frame.cc winlist.hh screen.hh main.hh misc.hh window.hh frame.hh \
  client.hh title.hh utility.hh decoration.hh border.hh info.hh winmenu.hh \
  action.hh atoms.hh config.hh
