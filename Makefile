@@ -31,7 +31,7 @@ $(PROG): $(OFILES)
 	$(CC) $(CCFLAGS) -c $<
 
 distclean: clean
-	rm -f $(PROG) .depend
+	rm -f $(PROG) depend.mk
 
 clean: tidy
 	rm -f *.o
