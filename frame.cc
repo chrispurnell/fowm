@@ -444,8 +444,7 @@ void frame_window::destroy()
 	XFree(w_hints);
 
 	XDestroyWindow(dpy, id());
-	this->~frame_window();
-	free(this);
+	mdelete(frame_window, this);
 }
 
 int frame_window::read_wm_hints()

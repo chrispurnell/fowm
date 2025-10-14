@@ -47,8 +47,7 @@ void title_window::destroy()
 	XFreeGC(dpy, w_gc);
 #endif
 	XDestroyWindow(dpy, id());
-	this->~title_window();
-	free(this);
+	mdelete(title_window, this);
 }
 
 void title_window::set_background()

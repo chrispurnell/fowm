@@ -52,8 +52,7 @@ void root_window::destroy()
 
 	XDeleteProperty(dpy, id(), NET_SUPPORTING_WM_CHECK);
 	XDeleteProperty(dpy, id(), NET_SUPPORTED);
-	this->~root_window();
-	free(this);
+	mdelete(root_window, this);
 }
 
 void root_window::init()

@@ -40,7 +40,7 @@ tidy:
 	rm -f *~ *.bak *.orig
 
 depend:
-	$(CC) -MM $(INC) $(CFILES) > depend.mk
+	$(CC) -MM $(CFILES) > depend.mk
 
 ifeq (depend.mk, $(wildcard depend.mk))
 include depend.mk

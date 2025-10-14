@@ -17,6 +17,7 @@ template <typename T> inline T * realloc(void * p, size_t s) { return static_cas
 inline void * operator new(size_t, void * p) { return p; }
 
 #define mnew(T, ...) (new (malloc(sizeof(T))) T(__VA_ARGS__))
+#define mdelete(T, p) do { (p)->~T(); free(p); } while(false)
 
 extern bool str_eq(const char *, const char *);
 extern bool to_int(const char *, int *);
