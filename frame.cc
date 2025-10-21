@@ -817,7 +817,7 @@ void frame_window::send_message(Atom atom, Time time)
 
 void frame_window::focus(Time time)
 {
-	if (w_input) XSetInputFocus(dpy, client.id(), RevertToPointerRoot, CurrentTime);
+	if (w_input) XSetInputFocus(dpy, client.id(), RevertToPointerRoot, time);
 	if (w_take_focus) send_message(WM_TAKE_FOCUS, time);
 }
 
