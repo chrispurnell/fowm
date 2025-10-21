@@ -67,7 +67,7 @@ private:
 		window(fwin), client(this, cwin) {}
 	~frame_window() {}
 
-	void send_message(Atom);
+	void send_message(Atom, Time);
 	void set_state(ulong);
 	void fetch_name();
 
@@ -108,13 +108,13 @@ public:
 	void map();
 	void unmap();
 	void show();
-	void close();
+	void close(Time);
 
 	void set_workspace(uint);
 	void set_sticky(bool);
 	void set_style(uchar);
 	void set_title();
-	void focus();
+	void focus(Time);
 
 	frame_window * next() { return node.n_next; }
 

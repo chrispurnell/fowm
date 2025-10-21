@@ -49,7 +49,7 @@ void client_window::focus_in(XFocusChangeEvent *)
 
 	frame_window * fwin = screen->focus;
 	if (fwin && fwin != w_frame)
-		fwin->focus();
+		fwin->focus(CurrentTime);
 }
 
 void client_window::focus_out(XFocusChangeEvent * ev)

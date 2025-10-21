@@ -533,14 +533,14 @@ act_iconify;
 class close_action : public action
 {
 public:
-	void key_event(XKeyEvent *, frame_window * win) override
+	void key_event(XKeyEvent * ev, frame_window * win) override
 	{
-		if (win) win->close();
+		if (win) win->close(ev->time);
 	}
 
-	void button_event(XButtonEvent *, frame_window * win) override
+	void button_event(XButtonEvent * ev, frame_window * win) override
 	{
-		if (win) win->close();
+		if (win) win->close(ev->time);
 	}
 }
 act_close;
