@@ -1308,16 +1308,20 @@ void frame_window::set_fullscreen(bool set)
 void frame_window::send_configure_notify()
 {
 	cfg_style * cfg = config::style + w_style;
+	int x = w_x;
+	int y = w_y;
 	uint w = w_width - (cfg->left + cfg->right);
 	uint h = (w_height + w_shade) - (cfg->top + cfg->bottom);
+
+	revert_position(w_hints->win_gravity, &x, &y, cfg);
 
 	Window cwin = client.id();
 	XEvent xev = {};
 	xev.xconfigure.type = ConfigureNotify;
 	xev.xconfigure.event = cwin;
 	xev.xconfigure.window = cwin;
-	xev.xconfigure.x = w_x;
-	xev.xconfigure.y = w_y;
+	xev.xconfigure.x = x;
+	xev.xconfigure.y = y;
 	xev.xconfigure.width = w;
 	xev.xconfigure.height = h;
 	XSendEvent(dpy, cwin, False, StructureNotifyMask, &xev);
@@ -1366,13 +1370,13 @@ void frame_window::configure_request(XConfigureRequestEvent * ev)
 	if (mask & (CWX | CWY))
 	{
 		XSizeHints * hints = w_hints;
-		hints->x = (mask & CWX) ? ev->x : w_x;
-		hints->y = (mask & CWY) ? ev->y : w_y;
+		hints->x = ev->x;
+		hints->y = ev->y;
 		hints->width = (mask & CWWidth) ? ev->width : w;
 		hints->height = (mask & CWHeight) ? ev->height : h;
 		adjust_position(hints, cfg);
-		w_x = hints->x;
-		w_y = hints->y;
+		if (mask & CWX) w_x = hints->x;
+		if (mask & CWY) w_y = hints->y;
 		XMoveWindow(dpy, id(), w_x, w_y);
 	}
 
