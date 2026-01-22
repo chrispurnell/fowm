@@ -802,7 +802,7 @@ void frame_window::set_title()
 	if (w_title) w_title->set_title();
 }
 
-void frame_window::send_message(Atom atom, Time time)
+void frame_window::send_message(Atom atom)
 {
 	Window cwin = client.id();
 	XEvent ev = {};
@@ -811,20 +811,20 @@ void frame_window::send_message(Atom atom, Time time)
 	ev.xclient.message_type = WM_PROTOCOLS;
 	ev.xclient.format = 32;
 	ev.xclient.data.l[0] = atom;
-	ev.xclient.data.l[1] = time;
+	ev.xclient.data.l[1] = CurrentTime;
 	XSendEvent(dpy, cwin, False, NoEventMask, &ev);
 }
 
-void frame_window::focus(Time time)
+void frame_window::focus()
 {
-	if (w_input) XSetInputFocus(dpy, client.id(), RevertToPointerRoot, time);
-	if (w_take_focus) send_message(WM_TAKE_FOCUS, time);
+	if (w_input) XSetInputFocus(dpy, client.id(), RevertToPointerRoot, CurrentTime);
+	if (w_take_focus) send_message(WM_TAKE_FOCUS);
 }
 
-void frame_window::close(Time time)
+void frame_window::close()
 {
 	if (w_delete_window)
-		send_message(WM_DELETE_WINDOW, time);
+		send_message(WM_DELETE_WINDOW);
 	else
 		kill();
 }
@@ -1327,10 +1327,10 @@ void frame_window::send_configure_notify()
 	XSendEvent(dpy, cwin, False, StructureNotifyMask, &xev);
 }
 
-void frame_window::enter_notify(XCrossingEvent * ev)
+void frame_window::enter_notify(XCrossingEvent *)
 {
 	screen->focus = this;
-	focus(ev->time);
+	focus();
 }
 
 void frame_window::leave_notify(XCrossingEvent *)
