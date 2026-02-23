@@ -12,5 +12,6 @@ extern bool restart;
 extern bool running;
 extern uint pressed_button;
 extern bool button_moved;
+extern Time timestamp;
 
 #endif

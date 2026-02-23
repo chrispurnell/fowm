@@ -811,13 +811,13 @@ void frame_window::send_message(Atom atom)
 	ev.xclient.message_type = WM_PROTOCOLS;
 	ev.xclient.format = 32;
 	ev.xclient.data.l[0] = atom;
-	ev.xclient.data.l[1] = CurrentTime;
+	ev.xclient.data.l[1] = timestamp;
 	XSendEvent(dpy, cwin, False, NoEventMask, &ev);
 }
 
 void frame_window::focus()
 {
-	if (w_input) XSetInputFocus(dpy, client.id(), RevertToPointerRoot, CurrentTime);
+	if (w_input) XSetInputFocus(dpy, client.id(), RevertToPointerRoot, timestamp);
 	if (w_take_focus) send_message(WM_TAKE_FOCUS);
 }
 
