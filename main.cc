@@ -22,7 +22,7 @@ uint pressed_button = 0;
 bool button_moved = false;
 Time timestamp = CurrentTime;
 
-static bool got_alarm = false;
+static volatile bool got_alarm = false;
 
 static int error_handler(Display *, XErrorEvent *)
 {
