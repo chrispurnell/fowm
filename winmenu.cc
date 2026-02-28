@@ -33,7 +33,7 @@ class win_action : public action
 public:
 	Window frame;
 
-	win_action(Window f) : frame(f) {}
+	explicit win_action(Window f) : frame(f) {}
 
 	void button_event(XButtonEvent *, frame_window *)
 	{
