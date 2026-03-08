@@ -334,7 +334,8 @@ frame_window * frame_window::create(Window cwin, bool restore, int x, int y, uin
 	}
 
 	XSetWindowAttributes swa;
-	swa.event_mask = EnterWindowMask | LeaveWindowMask |
+	swa.event_mask = ButtonPressMask | ButtonReleaseMask |
+		EnterWindowMask | LeaveWindowMask |
 		SubstructureRedirectMask | StructureNotifyMask;
 	swa.cursor = config::cursor;
 
@@ -390,7 +391,7 @@ frame_window * frame_window::create(Window cwin, bool restore, int x, int y, uin
 	if (config::modifier)
 	{
 		XGrabButton(dpy, AnyButton, config::modifier, cwin, False,
-			ButtonPressMask| ButtonReleaseMask| ButtonMotionMask,
+			ButtonPressMask | ButtonReleaseMask | ButtonMotionMask,
 			GrabModeAsync, GrabModeAsync, None, None);
 	}
 
