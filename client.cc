@@ -40,6 +40,16 @@ void client_window::motion_notify(XMotionEvent * ev)
 	act->motion_event(ev, w_frame);
 }
 
+static Bool focus_in_cb(Display *, XEvent *ev, XPointer arg)
+{
+	if (ev->type == FocusIn)
+	{
+		bool * found = reinterpret_cast<bool *>(arg);
+		*found = true;
+	}
+	return False;
+}
+
 void client_window::focus_in(XFocusChangeEvent *)
 {
 	if (!w_frame->mapped())
@@ -48,8 +58,14 @@ void client_window::focus_in(XFocusChangeEvent *)
 	w_frame->set_focused();
 
 	frame_window * fwin = screen->focus;
-	if (fwin && fwin != w_frame)
-		fwin->focus();
+	if (!fwin || fwin == w_frame)
+		return;
+
+	bool found = false;
+	XCheckIfEvent(dpy, nullptr, focus_in_cb, reinterpret_cast<XPointer>(&found));
+	if (found) return;
+		
+	fwin->focus();
 }
 
 void client_window::focus_out(XFocusChangeEvent * ev)
