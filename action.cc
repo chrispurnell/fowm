@@ -96,7 +96,7 @@ public:
 
 send_action * send_action::first = nullptr;
 
-class goto_action: public action
+class goto_action : public action
 {
 private:
 	static goto_action * first;

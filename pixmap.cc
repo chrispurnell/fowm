@@ -34,7 +34,7 @@ private:
 public:
 	static xpixmap * create(const char * str, Pixmap pm, size_t len)
 	{
-		return new(malloc(offsetof(xpixmap, name) + len)) xpixmap(str, pm, len);
+		return new (malloc(offsetof(xpixmap, name) + len)) xpixmap(str, pm, len);
 	}
 
 	static bool find(const char * name, Pixmap * pm)
