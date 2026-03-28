@@ -441,7 +441,7 @@ void frame_window::destroy()
 
 	if (w_borders) border_window::destroy(w_borders, w_num_borders);
 	if (w_title) w_title->destroy();
-	if (w_name) XFree(w_name);
+	if (w_name) free(w_name);
 	XFree(w_hints);
 
 	XDestroyWindow(dpy, id());
