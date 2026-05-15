@@ -1112,15 +1112,15 @@ void config::read(const char * file)
 void config::fini()
 {
 #ifdef USE_XFT
-	if (!config::font) config::font = xft_font_open("sans", 12);
+	if (!font) font = xft_font_open("sans", 12);
 #else
-	if (!config::font) config::font = XLoadQueryFont(dpy, "fixed");
+	if (!font) font = XLoadQueryFont(dpy, "fixed");
 #endif
 
 	int a = font->ascent;
 	int h = a + font->descent;
 
-	cfg_style * csp = config::style + STYLE_INFO;
+	cfg_style * csp = style + STYLE_INFO;
 	csp->util.left += csp->left;
 	csp->util.right += csp->right;
 	int ih = csp->util.height;
@@ -1135,7 +1135,7 @@ void config::fini()
 		csp->util.baseline = a + csp->top;
 	}
 
-	cfg_util * cfg = &config::style[STYLE_MENU].util;
+	cfg_util * cfg = &style[STYLE_MENU].util;
 	int mh = cfg->height;
 	if (mh)
 	{
