@@ -4,7 +4,6 @@
 #include <X11/Xatom.h>
 
 #include "winlist.hh"
-#include "info.hh"
 #include "winmenu.hh"
 #include "atoms.hh"
 #include "config.hh"

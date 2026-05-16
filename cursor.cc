@@ -1,7 +1,6 @@
 #include <X11/cursorfont.h>
 
 #include "cursor.hh"
-#include "config.hh"
 #include "main.hh"
 
 namespace

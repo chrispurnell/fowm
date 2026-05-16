@@ -1,4 +1,3 @@
-#include <stdalign.h>
 #include <string.h>
 
 #include "winlist.hh"

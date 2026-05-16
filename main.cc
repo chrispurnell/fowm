@@ -4,8 +4,6 @@
 #include <stdio.h>
 #include <poll.h>
 
-#include <X11/Xresource.h>
-
 #include "config.hh"
 #include "screen.hh"
 #include "frame.hh"

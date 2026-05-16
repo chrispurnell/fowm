@@ -3,6 +3,8 @@
 
 #include "decoration.hh"
 
+struct cfg_border;
+
 class udecor_window final : public window
 {
 private:

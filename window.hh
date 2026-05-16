@@ -1,6 +1,7 @@
 #ifndef WINDOW_HH
 #define WINDOW_HH
 
+#include <X11/Xlib.h>
 #include <X11/extensions/shape.h>
 
 #include "misc.hh"

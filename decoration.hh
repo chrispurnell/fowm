@@ -4,7 +4,6 @@
 #include "window.hh"
 
 struct cfg_rect;
-struct cfg_border;
 class frame_window;
 
 class decor_window : public window

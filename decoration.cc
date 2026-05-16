@@ -1,5 +1,4 @@
 #include "frame.hh"
-#include "screen.hh"
 #include "config.hh"
 
 Window decor_window::create_window(Window pwin, uint events, rectangle * rect, ulong color, Pixmap pmap)

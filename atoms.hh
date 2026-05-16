@@ -1,8 +1,6 @@
 #ifndef ATOMS_HH
 #define ATOMS_HH
 
-#include <X11/Xlib.h>
-
 #include "main.hh"
 
 namespace atoms

@@ -1,6 +1,10 @@
 #ifndef INFO_HH
 #define INFO_HH
 
+#ifdef USE_XFT
+#include <X11/Xft/Xft.h>
+#endif
+
 #include "utility.hh"
 
 #define INFO_TEXT_SIZE 48

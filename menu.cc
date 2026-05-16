@@ -2,7 +2,6 @@
 
 #include "frame.hh"
 #include "menu.hh"
-#include "winmenu.hh"
 #include "screen.hh"
 #include "action.hh"
 #include "config.hh"
